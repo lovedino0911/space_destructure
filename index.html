@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>우주 파괴 시뮬레이터</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbit&family=Rajdhani:wght@400;700&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+  <div id="app">
+    <!-- 화면 플래시 효과를 위한 오버레이 -->
+    <div id="screen-flash"></div>
+    <!-- 캔버스 컨테이너 -->
+    <canvas id="bg"></canvas>
+
+    <!-- 로비 화면 -->
+    <div id="lobby" class="ui-overlay active">
+      <h1 class="glitch" data-text="UNIVERSE DESTRUCTION">UNIVERSE DESTRUCTION</h1>
+      <p class="subtitle">파괴할 행성을 선택하세요</p>
+
+      <div class="planet-selection">
+        <div class="planet-card" data-planet="earth">
+          <div class="planet-preview earth"></div>
+          <span>지구 (Earth)</span>
+        </div>
+        <div class="planet-card" data-planet="mars">
+          <div class="planet-preview mars"></div>
+          <span>화성 (Mars)</span>
+        </div>
+        <div class="planet-card" data-planet="jupiter">
+          <div class="planet-preview jupiter"></div>
+          <span>목성 (Jupiter)</span>
+        </div>
+        <div class="planet-card" data-planet="sun">
+          <div class="planet-preview sun"></div>
+          <span>태양 (Sun)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 게임 레이아웃 (행성 파괴 화면) -->
+    <div id="game-ui" class="ui-overlay">
+      <div class="top-bar">
+        <button id="back-to-lobby" class="btn-secondary">← 로비로</button>
+        <div id="planet-info">
+          <h2 id="current-planet-name">지구</h2>
+          <div class="status-container">
+            <p id="planet-status">상태: 안정</p>
+            <p id="destruction-rate">파괴율: 0.00%</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bottom-controls">
+        <div class="control-item active" data-tool="missile" title="핵미사일">미사일</div>
+        <div class="control-item" data-tool="laser" title="메가 레이저">레이저</div>
+        <div class="control-item" data-tool="meteors" title="유성우">유성우</div>
+        <div class="control-item" data-tool="blackhole" title="블랙홀">블랙홀</div>
+        <div class="control-item" data-tool="moon" title="달 충돌">달 충돌</div>
+        <div class="control-separator"></div>
+        <button id="reset-planet" class="btn-secondary" style="border-radius: 50px; padding: 10px 15px;">초기화</button>
+      </div>
+
+      <div class="instructions">
+        마우스 드래그: 회전 | 휠: 줌 인/아웃 | 클릭: 기능 실행
+      </div>
+    </div>
+  </div>
+  <script type="module" src="main.js"></script>
+</body>
+
+</html>
