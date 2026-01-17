@@ -1,0 +1,278 @@
+:root {
+  --primary-color: #00f2ff;
+  --bg-dark: #050505;
+  --glass-bg: rgba(15, 15, 25, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --accent-red: #ff3e3e;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Rajdhani', 'Orbit', sans-serif;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: white;
+  overflow: hidden;
+}
+
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+.ui-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: opacity 0.5s ease;
+  background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
+}
+
+.ui-overlay.active {
+  display: flex;
+}
+
+/* 로비 스타일 */
+h1 {
+  font-size: 4rem;
+  font-weight: 700;
+  letter-spacing: 5px;
+  margin-bottom: 10px;
+  text-shadow: 0 0 20px var(--primary-color);
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: #aaa;
+  margin-bottom: 50px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.planet-selection {
+  display: flex;
+  gap: 30px;
+}
+
+.planet-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  padding: 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 160px;
+}
+
+.planet-card:hover {
+  transform: translateY(-15px) scale(1.05);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 30px rgba(0, 242, 255, 0.3);
+}
+
+.planet-preview {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+  background-size: cover;
+  box-shadow: inset -10px -10px 20px rgba(0, 0, 0, 0.8);
+}
+
+.planet-preview.earth {
+  background-image: url('public/textures/earth.png');
+  /* 유지 또는 필요시 업데이트 */
+}
+
+.planet-preview.mars {
+  background-image: url('public/textures/mars_new.png');
+}
+
+.planet-preview.jupiter {
+  background-image: url('public/textures/jupiter.png');
+}
+
+.planet-preview.sun {
+  background-image: url('public/textures/sun.png');
+  box-shadow: 0 0 20px #ffaa00;
+}
+
+/* 게임 UI 스타일 */
+#game-ui {
+  justify-content: space-between;
+  padding: 40px;
+  pointer-events: none;
+  background: none;
+}
+
+#game-ui>* {
+  pointer-events: auto;
+}
+
+.top-bar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.btn-secondary {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+#planet-info {
+  text-align: right;
+  background: var(--glass-bg);
+  padding: 15px 25px;
+  border-radius: 15px;
+  border-right: 4px solid var(--primary-color);
+  box-shadow: 0 0 20px rgba(0, 242, 255, 0.1);
+}
+
+.status-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+#destruction-rate {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  text-shadow: 0 0 10px rgba(0, 242, 255, 0.5);
+}
+
+.bottom-controls {
+  position: absolute;
+  bottom: 40px;
+  /* 화면 맨 밑에서 40px 위 */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(25px);
+  padding: 12px 30px;
+  border-radius: 60px;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+  pointer-events: auto;
+}
+
+.control-separator {
+  width: 2px;
+  height: 30px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 0 5px;
+}
+
+.control-item {
+  padding: 10px 18px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.9rem;
+}
+
+#screen-flash {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0;
+}
+
+.control-item img {
+  display: none;
+}
+
+.control-item:hover {
+  background: rgba(0, 242, 255, 0.2);
+  transform: scale(1.1);
+}
+
+.control-item.active {
+  background: var(--primary-color);
+  box-shadow: 0 0 20px var(--primary-color);
+}
+
+.control-item.active img {
+  display: none;
+}
+
+.instructions {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.4);
+  background: rgba(0, 0, 0, 0.3);
+  padding: 3px 12px;
+  border-radius: 20px;
+}
+
+@keyframes glitch {
+  0% {
+    transform: translate(0);
+  }
+
+  20% {
+    transform: translate(-2px, 2px);
+  }
+
+  40% {
+    transform: translate(-2px, -2px);
+  }
+
+  60% {
+    transform: translate(2px, 2px);
+  }
+
+  80% {
+    transform: translate(2px, -2px);
+  }
+
+  100% {
+    transform: translate(0);
+  }
+}
